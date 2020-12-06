@@ -23,7 +23,8 @@ fullStory = story[:]
 for i in range(len(prompt)):
     if i == 0:
         input_variable = raw_input("Enter a {}:\t\t".format(prompt[i]))
-    input_variable = raw_input("{}:\t\t".format(prompt[i]))
+    else:
+        input_variable = raw_input("{}:\t\t".format(prompt[i]))
     fullStory = fullStory.replace("{}", str(input_variable), 1)
 
 print(fullStory)
