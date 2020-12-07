@@ -1,5 +1,5 @@
 # practicing basic API integration with python
-# 12.5.20
+# 12.6.20
 
 import requests
 import json
