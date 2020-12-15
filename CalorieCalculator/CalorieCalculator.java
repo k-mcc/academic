@@ -26,18 +26,14 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 /**
- * This Calculator class represents the JFrame on containing the
- * Roth IRA calculator.
+ * Calculates rough daily calorie intake based on weight, height, age,
+ * gender, and physical activity using the Mifflin - St Jeor Equation.
+ *
  * @author Kate McCarthy
  *
  */
 public class CalorieCalculator extends JFrame{
 
-	/**
-	 * Instance variables for State of Calculator
-	 * Don't change the variable names they are used by test
-	 * case
-	 */
 	protected int weight;
 	protected int height;
 	protected int currentAge;
@@ -45,11 +41,6 @@ public class CalorieCalculator extends JFrame{
 	protected double calories;
 	protected int futureAge;
 
-	/**
-	 * This represents the elements that are displayed on screen.
-	 * Don't change the name of these variables they ar used by the
-	 * test cases.
-	 */
 	protected JLabel ageLabel;
 	protected JSpinner ageSpinner;
 	protected JLabel weightLabel;
@@ -62,10 +53,6 @@ public class CalorieCalculator extends JFrame{
 	protected JLabel heightLabel;
 	protected JSlider heightSlider;
 
-	/**
-	 * Inner classes that implement the handler form listeners
-	 *  These classes implement the change listeners.
-	 */
 	protected class HeightListener implements ChangeListener{
 		@Override
 		public void stateChanged(ChangeEvent e) {
@@ -78,8 +65,7 @@ public class CalorieCalculator extends JFrame{
 		}
     }
 
-	/**(
-	 *
+	/*
 	 *	Listener for age change events.
 	 */
 
@@ -98,7 +84,7 @@ public class CalorieCalculator extends JFrame{
 
 	/**
 	 *
-	 * Listener for month change events.
+	 * Listener for weight change events.
 	 *
 	 */
 	protected class WeightListener implements ChangeListener{
@@ -112,13 +98,6 @@ public class CalorieCalculator extends JFrame{
           }
 	}
 
- /**
-	 * Class represents the frame. That we will create
-	 * @param weight
-	 * @param height
-	 * @param currentAge
-	 * @param physAct
-	 */
 	public CalorieCalculator(int weight, int height, int currentAge, double physAct) {
 		super();
 		/*
@@ -135,33 +114,16 @@ public class CalorieCalculator extends JFrame{
 		setBounds(100, 100, 587, 363);
 		getContentPane().setLayout(null);
 
-
-        /*------------------------------------------------------------
-         * Logo Section Value Section.
-         * Doesn't show up in the designer.
-         *  You will need to run the program to see it.
-      	 * ------------------------------------------------------------
-      	 */
-        ImageIcon iconLogo = new ImageIcon("/Images/logo-uvacs.png");
-        JLabel logoCS = new JLabel();
-        logoCS.setIcon(iconLogo);
-        logoCS.setBounds(350, 28, 165, 63);
-        getContentPane().add(logoCS);
-
-		/*------------------------------------------------------------
-		 * monthly contribution section
-		 * ------------------------------------------------------------
-		 */
-        //Month Saving Title Label
+        //Weight Title Label
         weightLabel = new JLabel("Weight");
         weightLabel.setBounds(31, 131, 118, 26);
         getContentPane().add(weightLabel);
-        // Month Saving Display Label
+        // Weight Display Label
         weightDisplayAmount = new JLabel(getWeight() + " lb");
         weightDisplayAmount.setBounds(469, 137, 46, 14);
         getContentPane().add(weightDisplayAmount);
 
-        //Slide for selecting Month Savings
+        //Slide for selecting Weight
         weightSlider = new JSlider();
         //Sets the maximum value of the slide
         weightSlider.setMaximum(500);
@@ -185,12 +147,12 @@ public class CalorieCalculator extends JFrame{
         heightLabel = new JLabel("Height");
         heightLabel.setBounds(31, 177, 118, 26);
         getContentPane().add(heightLabel);
-        // Month Saving Display Label
+        // Height Display Label
         heightDisplay = new JLabel(getheight() + " in");
         heightDisplay.setBounds(469, 177, 94, 14);
         getContentPane().add(heightDisplay);
 
-      //Slide for selecting Month Savings
+      //Slide for selecting Height
         heightSlider = new JSlider();
         //Sets the maximum value of the slide
         heightSlider.setMaximum(100);
@@ -275,8 +237,8 @@ public class CalorieCalculator extends JFrame{
 	}
 
 	/**
-	 * A getter for the monthlySaving instance variable
-	 * @return the monthSavings
+	 * A getter for the weight instance variable
+	 * @return the weight
 	 */
 	public int getWeight() {
 		return this.weight;
@@ -292,7 +254,6 @@ public class CalorieCalculator extends JFrame{
 	}
 
 	public void setFutureAge() {
-		//calculates the new future age and updates the future age label.
 		this.futureAge = this.currentAge + this.height;
 		futureAgeLabel.setText(getfutureAgeDisplayText());
 	}
