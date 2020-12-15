@@ -1,3 +1,10 @@
+/* 
+ * Kate McCarthy
+ *  
+ * Turns the infinitive of a Spanish verb into the present subjunctive form.
+ */
+
+
 public class Subjunctive {
 
   public static void main (String[] args) {
