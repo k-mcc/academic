@@ -41,6 +41,7 @@ public class CalorieCalculator extends JFrame{
 	protected double physAct;
 	protected double calories;
 	protected int futureAge;
+	protected boolean female;
 
 	protected JLabel ageLabel;
 	protected JSpinner ageSpinner;
@@ -83,6 +84,20 @@ public class CalorieCalculator extends JFrame{
 
 	 }
 
+	 protected class GenderListener implements ActionListener{
+    public void actionPerformed(ActionEvent e) {
+        String gender = null;
+
+        System.out.print("ActionEvent received: ");
+        if (e.getActionCommand().equals("Female")) {
+    	    setGender(true);
+					setCalories(calculateCalories());
+        } else {
+    	    setGender(false);
+					setCalories(calculateCalories());
+        }
+     }
+	 }
 
 	/**
 	 *
@@ -109,6 +124,7 @@ public class CalorieCalculator extends JFrame{
 		this.height = height;
 		this.currentAge = currentAge;
 		this.physAct = physAct;
+		this.female = true;
 		/*
 		 * Setup close window behavior
 		 */
@@ -203,11 +219,13 @@ public class CalorieCalculator extends JFrame{
         buttonGroup.add(femaleButton);
         femaleButton.setSelected(true);
         femaleButton.setBounds(351, 66, 174, 23);
-        getContentPane().add(femaleButton);
+				femaleButton.addActionListener(new GenderListener());
+				getContentPane().add(femaleButton);
 
         JRadioButton maleButton = new JRadioButton("Male");
         buttonGroup.add(maleButton);
         maleButton.setBounds(351, 87, 118, 23);
+				maleButton.addActionListener(new GenderListener());
         getContentPane().add(maleButton);
 
         JLabel genderLabel = new JLabel("Biological Gender");
@@ -234,8 +252,11 @@ public class CalorieCalculator extends JFrame{
 	}
 
 	public double calculateCalories() {
-
-		double amount = ((4.536*this.weight) + (15.88*this.height) + (5.0*this.currentAge) - 161.0);
+		double amount;
+		if (this.female) {
+			amount = ((4.536*this.weight) + (15.88*this.height) + (5.0*this.currentAge) - 161.0);
+		}
+		else amount = ((4.536*this.weight) + (15.88*this.height) + (5.0*this.currentAge) + 5.0);
 
 		return amount;
 	}
@@ -288,6 +309,10 @@ public class CalorieCalculator extends JFrame{
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+
+	public void setGender(boolean female) {
+		this.female = female;
 	}
 
 }
