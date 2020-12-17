@@ -22,6 +22,10 @@ import javax.swing.SpringLayout;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JRadioButton;
+import javax.swing.JToggleButton;
+import javax.swing.ButtonGroup;
+
 /**
  * Calculates rough daily calorie intake based on weight, height, age,
  * gender, and physical activity using the Mifflin - St Jeor Equation.
@@ -49,6 +53,7 @@ public class CalorieCalculator extends JFrame{
 	protected JLabel physActDisplay;
 	protected JLabel heightLabel;
 	protected JSlider heightSlider;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	protected class HeightListener implements ChangeListener{
 		@Override
@@ -193,6 +198,21 @@ public class CalorieCalculator extends JFrame{
         investmentDisplayValue = new JLabel(getCaloriesDisplayText());
         investmentDisplayValue.setBounds(338, 292, 243, 26);
         getContentPane().add(investmentDisplayValue);
+
+				JRadioButton femaleButton = new JRadioButton("Female");
+        buttonGroup.add(femaleButton);
+        femaleButton.setSelected(true);
+        femaleButton.setBounds(351, 66, 174, 23);
+        getContentPane().add(femaleButton);
+
+        JRadioButton maleButton = new JRadioButton("Male");
+        buttonGroup.add(maleButton);
+        maleButton.setBounds(351, 87, 118, 23);
+        getContentPane().add(maleButton);
+
+        JLabel genderLabel = new JLabel("Biological Gender");
+        genderLabel.setBounds(351, 38, 118, 16);
+        getContentPane().add(genderLabel);
 
 	}
 
