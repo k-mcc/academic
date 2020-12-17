@@ -40,7 +40,6 @@ public class CalorieCalculator extends JFrame{
 	protected int currentAge;
 	protected double physAct;
 	protected double calories;
-	protected int futureAge;
 	protected boolean female;
 
 	protected JLabel ageLabel;
@@ -49,7 +48,6 @@ public class CalorieCalculator extends JFrame{
 	protected JSlider weightSlider;
 	protected JLabel weightDisplayAmount;
 	protected JLabel heightDisplay;
-	protected JLabel futureAgeLabel;
 	protected JLabel investmentDisplayValue;
 	protected JLabel physActDisplay;
 	protected JLabel heightLabel;
@@ -62,7 +60,6 @@ public class CalorieCalculator extends JFrame{
 			JSlider source = (JSlider)e.getSource();
           	int value = source.getValue();
           	setHeight(value);
-          	setFutureAge();
           	setCalories(calculateCalories());
           	heightDisplay.setText(getheight() + " in");
 		}
@@ -78,7 +75,6 @@ public class CalorieCalculator extends JFrame{
 	          	JSpinner source = (JSpinner)e.getSource();
 	          	Object value = source.getValue();
 	          	setCurrentAge((int)value);
-	          	setFutureAge();
 	          	setCalories(calculateCalories());
 	     }
 
@@ -115,6 +111,17 @@ public class CalorieCalculator extends JFrame{
           }
 	}
 
+	protected class PhysActListener implements ChangeListener{
+		  public void stateChanged(ChangeEvent e) {
+          	JSlider source = (JSlider)e.getSource();
+          	int value = source.getValue();
+          	setPhysAct(value);
+          	setCalories(calculateCalories());
+          	//TODO: Update appropriate values and labels
+          	physActDisplay.setText("Activity: " + getPhysAct());
+          }
+	}
+
 	public CalorieCalculator(int weight, int height, int currentAge, double physAct) {
 		super();
 		/*
@@ -123,7 +130,7 @@ public class CalorieCalculator extends JFrame{
 		this.weight = weight;
 		this.height = height;
 		this.currentAge = currentAge;
-		this.physAct = physAct;
+		this.physAct = 1.2;
 		this.female = true;
 		/*
 		 * Setup close window behavior
@@ -195,18 +202,13 @@ public class CalorieCalculator extends JFrame{
         ageLabel.setBounds(31, 65, 118, 26);
         getContentPane().add(ageLabel);
 
-        futureAge = currentAge + height;
-        futureAgeLabel = new JLabel(getfutureAgeDisplayText());
-        futureAgeLabel.setBounds(31, 292, 129, 26);
-        getContentPane().add(futureAgeLabel);
-
         ageSpinner = new JSpinner();
         ageSpinner.setBounds(169, 65, 54, 26);
         ageSpinner.setValue(getCurrentAge());
         ageSpinner.addChangeListener(new AgeListener());
         getContentPane().add(ageSpinner);
 
-        physActDisplay = new JLabel("Physical Activity: 1.3");
+        physActDisplay = new JLabel("Activity: " + getPhysAct());
         physActDisplay.setBounds(199, 292, 118, 26);
         getContentPane().add(physActDisplay);
 
@@ -231,6 +233,21 @@ public class CalorieCalculator extends JFrame{
         JLabel genderLabel = new JLabel("Biological Gender");
         genderLabel.setBounds(351, 38, 118, 16);
         getContentPane().add(genderLabel);
+
+				JSlider slider = new JSlider();
+        slider.setValue(0);
+        slider.setMajorTickSpacing(1);
+        slider.setMaximum(7);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        slider.setSnapToTicks(true);
+        slider.setBounds(169, 221, 266, 45);
+				slider.addChangeListener(new PhysActListener());
+        getContentPane().add(slider);
+
+        JLabel daysLabel = new JLabel("Days of Exercise /Wk");
+        daysLabel.setBounds(31, 228, 140, 26);
+        getContentPane().add(daysLabel);
 
 	}
 
@@ -269,11 +286,6 @@ public class CalorieCalculator extends JFrame{
 		return this.currentAge;
 	}
 
-	public java.lang.String getfutureAgeDisplayText() {
-		//future age display text
-		return "Future Age: " + (this.futureAge);
-	}
-
 	/**
 	 * A getter for the weight instance variable
 	 * @return the weight
@@ -286,14 +298,12 @@ public class CalorieCalculator extends JFrame{
 		return this.height;
 	}
 
-	public void setCurrentAge(int currentAge) {
-		this.currentAge = currentAge;
-		setFutureAge();
+	public double getPhysAct() {
+		return this.physAct;
 	}
 
-	public void setFutureAge() {
-		this.futureAge = this.currentAge + this.height;
-		futureAgeLabel.setText(getfutureAgeDisplayText());
+	public void setCurrentAge(int currentAge) {
+		this.currentAge = currentAge;
 	}
 
 	public void setCalories(double calories) {
@@ -313,6 +323,15 @@ public class CalorieCalculator extends JFrame{
 
 	public void setGender(boolean female) {
 		this.female = female;
+	}
+
+	public void setPhysAct(int days) {
+		double activity;
+		if (days < 2) activity = 1.2;
+		else if (days < 4) activity = 1.375;
+		else if (days < 6) activity = 1.55;
+		else activity = 1.725;
+		this.physAct = activity;
 	}
 
 }
