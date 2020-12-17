@@ -275,7 +275,7 @@ public class CalorieCalculator extends JFrame{
 		}
 		else amount = ((4.536*this.weight) + (15.88*this.height) + (5.0*this.currentAge) + 5.0);
 
-		return amount;
+		return (amount * this.physAct);
 	}
 
 	public java.lang.String getCaloriesDisplayText() {
